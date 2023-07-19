@@ -1,0 +1,146 @@
+<!-- Citation for the following code (the entirety of this file):
+Title: Node.js Starter App
+Type: Full program
+Date: 05/25/2023
+Copied and then modified to fit our database structure:
+Source URL: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+
+Citation for return to top button.
+Date: 6/7/2023
+Type: adapted for returning to beginning of our table view
+Copied for our form validation of phone numbers.
+Source URL:
+https://www.w3schools.com/howto/howto_js_scroll_to_top.asp
+-->
+
+<!-- customerReservation.hbs -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+ <h2>CustomerReservation</h2>
+
+{{!-- Secondary local navigational bar for CRUD operations--}}
+<nav class="topics">
+    <a href="#browse" class="topics">View All CustomerReservations</a>
+    <a href="#insert" class="topics">Add CustomerReservation</a>
+    <a href="#update" class="topics">Update CustomerReservation</a>
+</nav>
+
+{{!-- Create a table --}}
+<div id="browse">
+ <table id="customerTable" border="1" cellpadding="5">
+    <caption>Current CustomerReservation Listing</caption>
+    {{!-- Body section --}}
+    <tbody>
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr class="customerCol">
+            <th class="customerH">Customer Reservation ID</th>
+            <th class="customerH">Customer</th>
+            <th class="customerH">Reservation ID</th>
+            <th>Delete</th>
+        </tr>
+
+        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+        {{#each customerReservationData}}
+        <tr data-value={{this.customerReservationId}}>
+            <td>{{this.customerReservationId}}</td>
+            <td>{{this.customer}}</td>
+            <td>{{this.reservationId}}</td>
+            <td><button onclick="deleteCustomerReservation({{this.customerReservationId}})">Delete</button></td>
+        </tr>
+        {{/each}}
+    </tbody>
+ </table>
+</div>
+
+<div id="reference">
+  <h3>Reservations</h3>
+  <table id= "customerTable" border="1" cellpadding="5">
+      <caption>Reservations Listing (For Reference)</caption>
+      <tbody>
+        {{!-- For just the first row, we print each key of the row object as a header cell so we
+        know what each column means when the page renders --}}
+        <tr class="customerCol">
+            <th class="customerH">Reservation ID</th>
+            <th class="customerH">Agent</th>
+            <th class="customerH">Start Date (YYYY-MM-DD)</th>
+            <th class="customerH">End Date (YYYY-MM-DD)</th>
+        </tr>
+
+        {{!-- For each row, print the id, fname, lname, homeworld and age, in order --}}
+        {{#each reservationData}}
+        <tr data-value={{this.reservationId}}>
+            <td>{{this.reservationId}}</td>
+            <td>{{this.agent}}</td>
+            <td>{{this.startDate}}</td>
+            <td>{{this.endDate}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+  </table>
+</div> <!-- reference -->
+
+<!-- Insert -->
+<div id="insert">
+        <form id="add-customerReservation-form">
+            <legend><strong>Add CustomerReservation</strong></legend>
+            <fieldset class="fields">
+              <label for="customer" class="required"> Customer </label>
+              <select name="customer" required id="input-customerId">
+                <option value="0">Select a Customer</option>
+                {{#each customerData}}
+                <option value="{{this.customerId}}">{{this.customer}}</option>
+                {{/each}}
+              </select> 
+              <label for="reservationId" class="required"> Reservation ID </label>
+              <select name="reservationId" required id="input-reservationId">
+                <option value="0">Select a Reservation ID</option>
+                {{#each reservationData}}
+                <option value="{{this.reservationId}}">{{this.reservationId}}</option>
+                {{/each}}
+               </select> 
+              <caption>* these fields are required</caption>
+              </fieldset>
+              <input class="btn" type="submit" id="addCustomerReservation" value="Add CustomerReservation">
+        </form> 
+</div><!-- insert -->
+
+{{!-- Return to Top button --}}
+<button class="btn" onclick="topFunction()" id="topBtn" title="Go to top">Return to Top</button>
+
+<!-- Update -->
+<div id="update">
+    <form id="update-customerReservation-form">
+        <legend><strong>Update CustomerReservation</strong></legend>
+        <fieldset class="fields">
+          <label class="required">For Customer Reservation ID:</label>
+          <select name="id" required id="input-customerReservationId-update">
+                <option value="0">Select a CustomerReservation ID</option>
+                {{#each customerReservationData}}
+                <option value="{{this.customerReservationId}}">{{this.customerReservationId}}</option>
+                {{/each}}
+              </select> 
+        <label for="customer" class="required"> Customer </label>
+          <select name="customer" required id="input-customerId-update">
+                <option value="0">Select a Customer</option>
+                {{#each customerData}}
+                <option id="option-{{this.customer}}" value="{{this.customerId}}">{{this.customer}}</option>
+                {{/each}}
+              </select> 
+              <label for="reservationId" class="required"> Reservation ID </label>
+              <select name="reservationId" required id="input-reservationId-update">
+                <option value="0">Select a Reservation ID</option>
+                {{#each reservationData}}
+                <option value="{{this.reservationId}}">{{this.reservationId}}</option>
+                {{/each}}
+               </select> 
+           <caption>* these fields are required</caption>
+          </fieldset>
+          <input class="btn" type="submit" id="updateCustomerReservation" value="Update CustomerReservation">
+    </form> 
+</div><!-- update -->
+
+<script src="./js/add_customerReservation.js"></script>
+<script src="./js/update_customerReservation.js"></script>
+<script src="./js/delete_customerReservation.js"></script>
+<script src="./js/top_button.js"></script>
